@@ -851,26 +851,14 @@
         vehicle: form.vehicle.value,
         message: form.message.value,
         _subject: '🚗 New Quote/Appointment Request — Vinnie\'s Auto Detailing',
+        _cc:      SMS_EMAIL,
+        _replyto: form.email.value,
       };
 
-      // SMS notification data — short format for text message
-      const smsData = {
-        name:     data.name,
-        phone:    data.phone,
-        email:    data.email,
-        service:  data.service,
-        vehicle:  data.vehicle,
-        message:  data.message,
-        _to:      SMS_EMAIL,
-        _subject: 'New Quote Request',
-        _replyto: data.email,
-        // Keep body short for SMS
-        body: `New request from ${data.name} (${data.phone}) for ${data.service} on ${data.vehicle}.`,
-      };
 
-      let emailOk = false, sheetOk = false, smsOk = false;
+      let emailOk = false, sheetOk = false;
 
-      // Send to Formspree (email to you)
+      // Send to Formspree (email + SMS via _cc)
       if (FORMSPREE_URL !== 'PASTE_FORMSPREE_URL_HERE') {
         try {
           const res = await fetch(FORMSPREE_URL, {
@@ -879,20 +867,8 @@
             body: JSON.stringify(data)
           });
           emailOk = res.ok;
-
-          // Also send SMS notification via same Formspree endpoint
-          if (emailOk) {
-            try {
-              await fetch(FORMSPREE_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                body: JSON.stringify(smsData)
-              });
-              smsOk = true;
-            } catch(e) { smsOk = false; }
-          }
         } catch(err) { emailOk = false; }
-      } else { emailOk = true; smsOk = true; }
+      } else { emailOk = true; }
 
       // Send to Google Sheets
       if (GOOGLE_SHEET_URL !== 'PASTE_GOOGLE_SCRIPT_URL_HERE') {
