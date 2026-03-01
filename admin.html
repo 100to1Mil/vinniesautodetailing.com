@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vinnie's Admin — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0d0d0d;
+  --surface: #161616;
+  --card: #1e1e1e;
+  --border: #2c2c2c;
+  --red: #cc1f2b;
+  --red-dark: #9e151f;
+  --gold: #b8902e;
+  --white: #f0f0ee;
+  --muted: #777;
+  --green: #2ecc71;
+  --blue: #3b82f6;
+  --input-bg: #111;
+}
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+}
+
+/* LOGIN */
+#login-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at 50% 0%, rgba(204,31,43,0.12) 0%, transparent 60%);
+}
+.login-box {
+  width: 360px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 40px 36px;
+  text-align: center;
+}
+.login-box .logo-text {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  letter-spacing: 0.05em;
+  color: var(--red);
+  margin-bottom: 4px;
+}
+.login-box .sub {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 32px;
+}
+.login-box input {
+  width: 100%;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  margin-bottom: 12px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.login-box input:focus { border-color: var(--red); }
+.login-box button {
+  width: 100%;
+  background: var(--red);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 13px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: background 0.15s;
+  margin-top: 4px;
+}
+.login-box button:hover { background: var(--red-dark); }
+.login-error { color: #ff6b6b; font-size: 12px; margin-top: 10px; display: none; }
+
+/* LAYOUT */
+#app { display: none; min-height: 100vh; display: none; }
+.sidebar {
+  width: 220px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 0;
+  z-index: 10;
+}
+.sidebar-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  padding: 0 24px 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.sidebar-logo span { color: var(--red); }
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 24px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+  border-left: 3px solid transparent;
+  user-select: none;
+}
+.nav-item:hover { color: var(--white); background: rgba(255,255,255,0.03); }
+.nav-item.active { color: var(--white); border-left-color: var(--red); background: rgba(204,31,43,0.08); }
+.nav-icon { font-size: 16px; }
+.sidebar-bottom {
+  margin-top: auto;
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+}
+.logout-btn {
+  width: 100%;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  border-radius: 6px;
+  padding: 9px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.logout-btn:hover { border-color: var(--red); color: var(--red); }
+
+.main {
+  margin-left: 220px;
+  padding: 40px 48px;
+  min-height: 100vh;
+}
+.page { display: none; }
+.page.active { display: block; }
+
+.page-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  letter-spacing: 0.03em;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.page-sub { font-size: 13px; color: var(--muted); margin-bottom: 32px; }
+
+/* SAVE BAR */
+.save-bar {
+  position: fixed;
+  bottom: 0; left: 220px; right: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 16px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 100;
+  transform: translateY(100%);
+  transition: transform 0.25s ease;
+}
+.save-bar.visible { transform: translateY(0); }
+.save-bar-msg { font-size: 13px; color: var(--muted); }
+.save-bar-msg span { color: var(--gold); font-weight: 600; }
+.save-btn {
+  background: var(--red);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 11px 28px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.save-btn:hover { background: var(--red-dark); }
+.save-btn:disabled { background: #444; cursor: not-allowed; }
+.save-status { font-size: 12px; color: var(--green); margin-left: 16px; opacity: 0; transition: opacity 0.3s; }
+.save-status.show { opacity: 1; }
+
+/* CARDS */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 32px;
+  margin-bottom: 20px;
+}
+.card-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.06em;
+  color: var(--white);
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.card-title .badge {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: rgba(204,31,43,0.15);
+  color: var(--red);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+/* FORM ELEMENTS */
+label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+input[type="text"], input[type="password"], input[type="email"], input[type="tel"], textarea, select {
+  width: 100%;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+  margin-bottom: 16px;
+}
+input:focus, textarea:focus, select:focus { border-color: var(--red); }
+textarea { resize: vertical; min-height: 80px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+/* PRICE TABLE EDITOR */
+.price-table { width: 100%; border-collapse: collapse; }
+.price-table th {
+  padding: 10px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.price-table td { padding: 8px 6px; vertical-align: middle; }
+.price-table td:first-child { font-size: 13px; font-weight: 600; color: var(--white); padding-left: 0; white-space: nowrap; }
+.price-table input {
+  margin-bottom: 0;
+  padding: 8px 10px;
+  font-size: 12px;
+  text-align: center;
+  border-radius: 6px;
+}
+.price-table tr:not(:last-child) td { border-bottom: 1px solid var(--border); }
+
+/* REVIEW EDITOR */
+.review-editor {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 14px;
+  position: relative;
+}
+.review-editor .review-num {
+  position: absolute;
+  top: -10px;
+  left: 14px;
+  background: var(--red);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.star-select { display: flex; gap: 6px; margin-bottom: 16px; }
+.star-select span {
+  font-size: 22px;
+  cursor: pointer;
+  transition: transform 0.1s;
+  color: var(--border);
+}
+.star-select span.active { color: var(--gold); }
+.star-select span:hover { transform: scale(1.2); }
+
+/* GALLERY EDITOR */
+.gallery-editor-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.gallery-slot {
+  aspect-ratio: 4/3;
+  background: var(--input-bg);
+  border: 2px dashed var(--border);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.gallery-slot:hover { border-color: var(--red); }
+.gallery-slot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+.gallery-slot .overlay {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  border-radius: 8px;
+}
+.gallery-slot:hover .overlay { display: flex; }
+.gallery-slot .upload-icon { font-size: 28px; color: var(--muted); }
+.gallery-slot .upload-label { font-size: 11px; color: var(--muted); font-weight: 500; text-align: center; }
+.gallery-slot .remove-btn {
+  background: var(--red);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.slot-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  color: var(--border);
+}
+
+/* CONTACT EDITOR */
+.contact-field { margin-bottom: 16px; }
+
+/* FIREBASE STATUS */
+.firebase-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 24px;
+  padding: 12px 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.status-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #ff9f4a;
+  flex-shrink: 0;
+}
+.status-dot.connected { background: var(--green); }
+.status-dot.error { background: #ff6b6b; }
+
+/* SETUP BANNER */
+.setup-banner {
+  background: rgba(184,144,46,0.08);
+  border: 1px solid rgba(184,144,46,0.3);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 28px;
+}
+.setup-banner h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.05em;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.setup-banner p { font-size: 13px; color: #aaa; line-height: 1.7; margin-bottom: 12px; }
+.setup-banner code {
+  display: block;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-size: 12px;
+  color: #88d4ff;
+  line-height: 1.8;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .sidebar { width: 60px; }
+  .sidebar-logo, .nav-item span:not(.nav-icon), .sidebar-bottom { display: none; }
+  .main, .save-bar { margin-left: 60px; left: 60px; }
+  .form-row, .form-row-3 { grid-template-columns: 1fr; }
+  .gallery-editor-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="logo-text">VINNIE'S</div>
+    <div class="sub">Admin Dashboard</div>
+    <input type="password" id="pwd-input" placeholder="Enter password" />
+    <button onclick="attemptLogin()">Log In</button>
+    <div class="login-error" id="login-error">Incorrect password. Try again.</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-logo">VINNIE'S <span>ADMIN</span></div>
+    <div class="nav-item active" onclick="showPage('pricing')" data-page="pricing">
+      <span class="nav-icon">💰</span><span>Pricing</span>
+    </div>
+    <div class="nav-item" onclick="showPage('reviews')" data-page="reviews">
+      <span class="nav-icon">⭐</span><span>Reviews</span>
+    </div>
+    <div class="nav-item" onclick="showPage('gallery')" data-page="gallery">
+      <span class="nav-icon">📷</span><span>Gallery</span>
+    </div>
+    <div class="nav-item" onclick="showPage('contact')" data-page="contact">
+      <span class="nav-icon">📞</span><span>Contact Info</span>
+    </div>
+    <div class="nav-item" onclick="showPage('settings')" data-page="settings">
+      <span class="nav-icon">⚙️</span><span>Settings</span>
+    </div>
+    <div class="sidebar-bottom">
+      <button class="logout-btn" onclick="logout()">Log Out</button>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- Firebase Status -->
+    <div class="firebase-status" id="firebase-status">
+      <div class="status-dot" id="status-dot"></div>
+      <span id="status-text">Connecting to database...</span>
+    </div>
+
+    <!-- PRICING PAGE -->
+    <div class="page active" id="page-pricing">
+      <div class="page-title">Pricing</div>
+      <p class="page-sub">Edit all pricing ranges. Changes go live on your website instantly after saving.</p>
+
+      <div class="card">
+        <div class="card-title">Detailing Packages <span class="badge">Main Table</span></div>
+        <div style="overflow-x:auto">
+          <table class="price-table" id="detailing-table">
+            <thead>
+              <tr>
+                <th>Vehicle Size</th>
+                <th>Interior Only</th>
+                <th>Exterior Only</th>
+                <th>Full Detail</th>
+              </tr>
+            </thead>
+            <tbody id="detailing-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Ceramic Coating <span class="badge">4 Tiers</span></div>
+        <div style="overflow-x:auto">
+          <table class="price-table" id="ceramic-table">
+            <thead>
+              <tr>
+                <th>Vehicle Size</th>
+                <th style="color:#4a9eff">Pro Lite</th>
+                <th style="color:#7b6fff">Pro</th>
+                <th style="color:#ff6fa0">Pro+</th>
+                <th style="color:#e8c84a">HCC</th>
+              </tr>
+            </thead>
+            <tbody id="ceramic-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Add-On Services</div>
+        <div id="addons-editor"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Special Conditions / Upcharges</div>
+        <div id="upcharges-editor"></div>
+      </div>
+    </div>
+
+    <!-- REVIEWS PAGE -->
+    <div class="page" id="page-reviews">
+      <div class="page-title">Reviews</div>
+      <p class="page-sub">Paste in your Google reviews. Up to 6 reviews displayed on the site.</p>
+      <div id="reviews-editor"></div>
+    </div>
+
+    <!-- GALLERY PAGE -->
+    <div class="page" id="page-gallery">
+      <div class="page-title">Photo Gallery</div>
+      <p class="page-sub">Upload photos of your work. 6 slots — click any slot to upload a new image.</p>
+      <div class="card">
+        <div class="gallery-editor-grid" id="gallery-grid"></div>
+      </div>
+      <p style="font-size:12px;color:var(--muted);margin-top:12px;">📌 Images are stored as URLs. For best results, upload photos to Google Drive or Imgur and paste the direct link.</p>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div class="page" id="page-contact">
+      <div class="page-title">Contact Info</div>
+      <p class="page-sub">Update your phone, email, location, and hours. Shown on the website contact section.</p>
+      <div class="card">
+        <div class="form-row">
+          <div>
+            <label>Phone Number</label>
+            <input type="tel" id="contact-phone" placeholder="(814) 555-0000" oninput="markDirty()" />
+          </div>
+          <div>
+            <label>Email Address</label>
+            <input type="email" id="contact-email" placeholder="vinnie@example.com" oninput="markDirty()" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label>Location / Service Area</label>
+            <input type="text" id="contact-location" placeholder="Brookville, PA" oninput="markDirty()" />
+          </div>
+          <div>
+            <label>Hours</label>
+            <input type="text" id="contact-hours" placeholder="By appointment" oninput="markDirty()" />
+          </div>
+        </div>
+        <div>
+          <label>Short Bio / Description</label>
+          <textarea id="contact-bio" placeholder="A short description about your business..." oninput="markDirty()"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS PAGE -->
+    <div class="page" id="page-settings">
+      <div class="page-title">Settings</div>
+      <p class="page-sub">Firebase configuration and admin password.</p>
+
+      <div class="setup-banner">
+        <h3>🔧 Firebase Setup Required</h3>
+        <p>To sync changes across all devices, add your Firebase config below. Get these values from your Firebase project console at <strong>console.firebase.google.com</strong> → Project Settings → Your Apps → Web App.</p>
+        <code>1. Go to console.firebase.google.com
+2. Click "Add project" → name it "vinnies-detailing"
+3. Click Continue through the setup
+4. Click "&lt;/&gt;" (Web App) → Register app
+5. Copy the firebaseConfig values below</code>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Firebase Config</div>
+        <div class="form-row">
+          <div>
+            <label>API Key</label>
+            <input type="text" id="fb-apikey" placeholder="AIzaSy..." oninput="markDirty()" />
+          </div>
+          <div>
+            <label>Auth Domain</label>
+            <input type="text" id="fb-authdomain" placeholder="your-app.firebaseapp.com" oninput="markDirty()" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label>Database URL</label>
+            <input type="text" id="fb-dburl" placeholder="https://your-app-default-rtdb.firebaseio.com" oninput="markDirty()" />
+          </div>
+          <div>
+            <label>Project ID</label>
+            <input type="text" id="fb-projectid" placeholder="your-project-id" oninput="markDirty()" />
+          </div>
+        </div>
+        <button onclick="saveFirebaseConfig()" style="background:var(--blue);color:#fff;border:none;border-radius:8px;padding:11px 24px;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:0.08em;cursor:pointer;">Connect Firebase</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Change Admin Password</div>
+        <div class="form-row">
+          <div>
+            <label>New Password</label>
+            <input type="password" id="new-pwd" placeholder="New password" />
+          </div>
+          <div>
+            <label>Confirm Password</label>
+            <input type="password" id="confirm-pwd" placeholder="Confirm password" />
+          </div>
+        </div>
+        <button onclick="changePassword()" style="background:var(--red);color:#fff;border:none;border-radius:8px;padding:11px 24px;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:0.08em;cursor:pointer;">Update Password</button>
+        <p id="pwd-msg" style="font-size:12px;margin-top:10px;color:var(--green);display:none;">Password updated!</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SAVE BAR -->
+  <div class="save-bar" id="save-bar">
+    <div class="save-bar-msg">You have <span>unsaved changes</span> — don't forget to save!</div>
+    <div style="display:flex;align-items:center;">
+      <span class="save-status" id="save-status">✓ Saved!</span>
+      <button class="save-btn" id="save-btn" onclick="saveAll()">Save Changes</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// =============================================
+//  CONFIG — Paste your Firebase config here
+//  after setting up your Firebase project
+// =============================================
+let FIREBASE_CONFIG = JSON.parse(localStorage.getItem('fb_config') || 'null');
+const ADMIN_PASSWORD_KEY = 'vinnies_admin_pwd';
+const DEFAULT_PASSWORD = 'vinnie2024'; // Change this after first login!
+
+// =============================================
+//  DEFAULT DATA
+// =============================================
+const defaultData = {
+  contact: {
+    phone: '',
+    email: '',
+    location: 'Brookville, PA',
+    hours: 'By appointment',
+    bio: 'Professional auto detailing serving Brookville, PA and surrounding areas. Every vehicle worked to the highest standard — no shortcuts.'
+  },
+  detailing: [
+    { size: '2-Door / Coupe', examples: 'Mustang, Camaro, Civic Coupe', interior: '$120–$135', exterior: '$85–$95', full: '$175–$200' },
+    { size: 'Small Sedan', examples: 'Civic, Corolla', interior: '$125–$140', exterior: '$90–$100', full: '$185–$210' },
+    { size: 'Mid-Size Sedan', examples: 'Camry, Accord', interior: '$140–$155', exterior: '$100–$110', full: '$210–$235' },
+    { size: 'Small SUV / Crossover', examples: 'RAV4, CR-V, Equinox', interior: '$150–$165', exterior: '$105–$115', full: '$225–$250' },
+    { size: 'Mid-Size SUV', examples: 'Pilot, Explorer', interior: '$160–$175', exterior: '$110–$120', full: '$240–$265' },
+    { size: 'Large SUV / Crew Cab', examples: 'Crew F-150, Ram 1500, Silverado', interior: '$165–$180', exterior: '$115–$125', full: '$250–$275' },
+    { size: 'Lifted / XL / Dually', examples: 'Tahoe, Suburban, 2500s', interior: '$180–$210', exterior: '$125–$145', full: '$275–$325+' },
+  ],
+  ceramic: [
+    { size: 'Small Sedan', proLite: '$450–$550', pro: '$550–$650', proPlus: '$650–$750', hcc: '$700–$800' },
+    { size: 'Mid-Size Sedan', proLite: '$550–$650', pro: '$650–$750', proPlus: '$750–$875', hcc: '$800–$900' },
+    { size: 'Small SUV / Crossover', proLite: '$650–$750', pro: '$750–$850', proPlus: '$875–$1,000', hcc: '$900–$1,050' },
+    { size: 'Mid-Size SUV', proLite: '$750–$850', pro: '$850–$950', proPlus: '$975–$1,100', hcc: '$1,050–$1,200' },
+    { size: 'Large SUV / Crew Cab', proLite: '$900–$1,050', pro: '$1,050–$1,250', proPlus: '$1,200–$1,400', hcc: '$1,250–$1,450' },
+    { size: 'Lifted / XL / Dually', proLite: '$1,100–$1,300', pro: '$1,250–$1,450+', proPlus: '$1,400–$1,600+', hcc: '$1,500–$1,750+' },
+  ],
+  addons: [
+    { name: 'Shampoo & Extraction', coupe: '$100', sedan: '$115–$125', smallSuv: '$130–$145', largeSuv: '$150–$165', xl: '$170–$200+' },
+    { name: '1-Step Polish', coupe: '$100', sedan: '$120–$135', smallSuv: '$140–$155', largeSuv: '$160–$175', xl: '$180–$210+' },
+    { name: '2-Step Polish', coupe: '$200', sedan: '$225–$245', smallSuv: '$255–$275', largeSuv: '$285–$310', xl: '$320–$375+' },
+    { name: 'Windshield Coating', coupe: '$50–$75', sedan: '$50–$75', smallSuv: '$50–$75', largeSuv: '$50–$75', xl: '$50–$75' },
+    { name: 'Ozone Treatment', coupe: '$75', sedan: '$85–$95', smallSuv: '$95–$110', largeSuv: '$110–$125', xl: '$125–$145' },
+    { name: 'Headlight Restoration', coupe: '$40/$70 pair', sedan: '$40/$70 pair', smallSuv: '$40/$70 pair', largeSuv: '$40/$70 pair', xl: '$40/$70 pair' },
+  ],
+  upcharges: [
+    { condition: 'Pet Hair Removal', price: '+$25–$100+', note: 'Depends on severity and coverage' },
+    { condition: 'Heavy Soiling / Biohazard', price: '+$75–$150', note: 'Excessive dirt, spills, bodily fluids' },
+    { condition: 'Severely Neglected Vehicle', price: "We'll talk first", note: 'Always reviewed before service begins' },
+  ],
+  reviews: Array(6).fill(null).map(() => ({ text: '', author: '', date: '', stars: 5 })),
+  gallery: Array(6).fill(null).map(() => ({ url: '', alt: '' })),
+};
+
+let siteData = JSON.parse(JSON.stringify(defaultData));
+let isDirty = false;
+let db = null;
+
+// =============================================
+//  AUTH
+// =============================================
+function getStoredPassword() {
+  return localStorage.getItem(ADMIN_PASSWORD_KEY) || DEFAULT_PASSWORD;
+}
+
+function attemptLogin() {
+  const pwd = document.getElementById('pwd-input').value;
+  if (pwd === getStoredPassword()) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    initApp();
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+    document.getElementById('pwd-input').value = '';
+  }
+}
+
+document.getElementById('pwd-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') attemptLogin();
+});
+
+function logout() {
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('app').style.display = 'none';
+}
+
+function changePassword() {
+  const np = document.getElementById('new-pwd').value;
+  const cp = document.getElementById('confirm-pwd').value;
+  const msg = document.getElementById('pwd-msg');
+  if (!np) return;
+  if (np !== cp) { msg.style.color = '#ff6b6b'; msg.textContent = 'Passwords do not match.'; msg.style.display = 'block'; return; }
+  localStorage.setItem(ADMIN_PASSWORD_KEY, np);
+  msg.style.color = 'var(--green)';
+  msg.textContent = '✓ Password updated!';
+  msg.style.display = 'block';
+  document.getElementById('new-pwd').value = '';
+  document.getElementById('confirm-pwd').value = '';
+}
+
+// =============================================
+//  FIREBASE
+// =============================================
+function saveFirebaseConfig() {
+  const config = {
+    apiKey: document.getElementById('fb-apikey').value,
+    authDomain: document.getElementById('fb-authdomain').value,
+    databaseURL: document.getElementById('fb-dburl').value,
+    projectId: document.getElementById('fb-projectid').value,
+  };
+  if (!config.apiKey || !config.databaseURL) {
+    alert('Please fill in at least the API Key and Database URL.');
+    return;
+  }
+  localStorage.setItem('fb_config', JSON.stringify(config));
+  FIREBASE_CONFIG = config;
+  initFirebase();
+}
+
+function initFirebase() {
+  if (!FIREBASE_CONFIG || !FIREBASE_CONFIG.apiKey) {
+    setStatus('orange', '⚠️ Firebase not configured — changes save locally only');
+    loadLocalData();
+    return;
+  }
+  // Load Firebase SDK dynamically
+  const script1 = document.createElement('script');
+  script1.src = 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js';
+  script1.onload = () => {
+    const script2 = document.createElement('script');
+    script2.src = 'https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js';
+    script2.onload = () => {
+      try {
+        if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
+        db = firebase.database();
+        setStatus('connected', '✓ Connected to Firebase — live sync active');
+        loadFirebaseData();
+      } catch(e) {
+        setStatus('error', '✗ Firebase error — check your config');
+        loadLocalData();
+      }
+    };
+    document.head.appendChild(script2);
+  };
+  document.head.appendChild(script1);
+}
+
+function setStatus(state, msg) {
+  const dot = document.getElementById('status-dot');
+  const text = document.getElementById('status-text');
+  dot.className = 'status-dot' + (state === 'connected' ? ' connected' : state === 'error' ? ' error' : '');
+  text.textContent = msg;
+}
+
+function loadFirebaseData() {
+  db.ref('siteData').once('value').then(snap => {
+    const val = snap.val();
+    if (val) {
+      siteData = Object.assign({}, defaultData, val);
+      // merge arrays carefully
+      if (val.detailing) siteData.detailing = val.detailing;
+      if (val.ceramic) siteData.ceramic = val.ceramic;
+      if (val.reviews) siteData.reviews = val.reviews;
+      if (val.gallery) siteData.gallery = val.gallery;
+    }
+    renderAll();
+  }).catch(() => {
+    setStatus('error', '✗ Could not read from Firebase');
+    loadLocalData();
+  });
+}
+
+function loadLocalData() {
+  const saved = localStorage.getItem('vinnies_site_data');
+  if (saved) siteData = JSON.parse(saved);
+  renderAll();
+}
+
+function saveToFirebase(data) {
+  if (!db) {
+    localStorage.setItem('vinnies_site_data', JSON.stringify(data));
+    return Promise.resolve();
+  }
+  return db.ref('siteData').set(data);
+}
+
+// =============================================
+//  NAVIGATION
+// =============================================
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelector(`[data-page="${name}"]`).classList.add('active');
+}
+
+// =============================================
+//  DIRTY / SAVE
+// =============================================
+function markDirty() {
+  isDirty = true;
+  document.getElementById('save-bar').classList.add('visible');
+}
+
+async function saveAll() {
+  const btn = document.getElementById('save-btn');
+  btn.disabled = true;
+  btn.textContent = 'Saving...';
+  collectFormData();
+  try {
+    await saveToFirebase(siteData);
+    isDirty = false;
+    document.getElementById('save-bar').classList.remove('visible');
+    const status = document.getElementById('save-status');
+    status.classList.add('show');
+    setTimeout(() => status.classList.remove('show'), 2500);
+  } catch(e) {
+    alert('Save failed. Check your Firebase connection.');
+  }
+  btn.disabled = false;
+  btn.textContent = 'Save Changes';
+}
+
+// =============================================
+//  RENDER
+// =============================================
+function renderAll() {
+  renderDetailingTable();
+  renderCeramicTable();
+  renderAddons();
+  renderUpcharges();
+  renderReviews();
+  renderGallery();
+  renderContact();
+  loadSettings();
+}
+
+function renderDetailingTable() {
+  const tbody = document.getElementById('detailing-tbody');
+  tbody.innerHTML = siteData.detailing.map((row, i) => `
+    <tr>
+      <td>${row.size}<br><small style="color:var(--muted);font-weight:300">${row.examples}</small></td>
+      <td><input type="text" value="${row.interior}" oninput="siteData.detailing[${i}].interior=this.value;markDirty()" /></td>
+      <td><input type="text" value="${row.exterior}" oninput="siteData.detailing[${i}].exterior=this.value;markDirty()" /></td>
+      <td><input type="text" value="${row.full}" oninput="siteData.detailing[${i}].full=this.value;markDirty()" /></td>
+    </tr>
+  `).join('');
+}
+
+function renderCeramicTable() {
+  const tbody = document.getElementById('ceramic-tbody');
+  tbody.innerHTML = siteData.ceramic.map((row, i) => `
+    <tr>
+      <td>${row.size}</td>
+      <td><input type="text" value="${row.proLite}" oninput="siteData.ceramic[${i}].proLite=this.value;markDirty()" /></td>
+      <td><input type="text" value="${row.pro}" oninput="siteData.ceramic[${i}].pro=this.value;markDirty()" /></td>
+      <td><input type="text" value="${row.proPlus}" oninput="siteData.ceramic[${i}].proPlus=this.value;markDirty()" /></td>
+      <td><input type="text" value="${row.hcc}" oninput="siteData.ceramic[${i}].hcc=this.value;markDirty()" /></td>
+    </tr>
+  `).join('');
+}
+
+function renderAddons() {
+  const container = document.getElementById('addons-editor');
+  container.innerHTML = `
+    <div style="overflow-x:auto">
+    <table class="price-table">
+      <thead><tr>
+        <th>Service</th><th>Coupe</th><th>Sedan</th><th>Small–Mid SUV</th><th>Large SUV</th><th>XL / Dually</th>
+      </tr></thead>
+      <tbody>
+        ${siteData.addons.map((a, i) => `
+          <tr>
+            <td>${a.name}</td>
+            <td><input type="text" value="${a.coupe}" oninput="siteData.addons[${i}].coupe=this.value;markDirty()" /></td>
+            <td><input type="text" value="${a.sedan}" oninput="siteData.addons[${i}].sedan=this.value;markDirty()" /></td>
+            <td><input type="text" value="${a.smallSuv}" oninput="siteData.addons[${i}].smallSuv=this.value;markDirty()" /></td>
+            <td><input type="text" value="${a.largeSuv}" oninput="siteData.addons[${i}].largeSuv=this.value;markDirty()" /></td>
+            <td><input type="text" value="${a.xl}" oninput="siteData.addons[${i}].xl=this.value;markDirty()" /></td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+    </div>
+  `;
+}
+
+function renderUpcharges() {
+  const container = document.getElementById('upcharges-editor');
+  container.innerHTML = siteData.upcharges.map((u, i) => `
+    <div style="display:grid;grid-template-columns:1.5fr 1fr 2fr;gap:12px;margin-bottom:8px;align-items:center;">
+      <div>
+        <label>Condition</label>
+        <input type="text" value="${u.condition}" oninput="siteData.upcharges[${i}].condition=this.value;markDirty()" />
+      </div>
+      <div>
+        <label>Price / Upcharge</label>
+        <input type="text" value="${u.price}" oninput="siteData.upcharges[${i}].price=this.value;markDirty()" />
+      </div>
+      <div>
+        <label>Note</label>
+        <input type="text" value="${u.note}" oninput="siteData.upcharges[${i}].note=this.value;markDirty()" />
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderReviews() {
+  const container = document.getElementById('reviews-editor');
+  container.innerHTML = siteData.reviews.map((r, i) => `
+    <div class="review-editor">
+      <div class="review-num">Review ${i + 1}</div>
+      <div class="star-select" id="stars-${i}">
+        ${[1,2,3,4,5].map(s => `<span class="${s <= r.stars ? 'active' : ''}" onclick="setStars(${i},${s})">★</span>`).join('')}
+      </div>
+      <label>Review Text</label>
+      <textarea placeholder="Paste the review text here..." oninput="siteData.reviews[${i}].text=this.value;markDirty()">${r.text}</textarea>
+      <div class="form-row">
+        <div>
+          <label>Customer Name</label>
+          <input type="text" placeholder="Jane D." value="${r.author}" oninput="siteData.reviews[${i}].author=this.value;markDirty()" />
+        </div>
+        <div>
+          <label>Date</label>
+          <input type="text" placeholder="January 2025" value="${r.date}" oninput="siteData.reviews[${i}].date=this.value;markDirty()" />
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function setStars(reviewIdx, stars) {
+  siteData.reviews[reviewIdx].stars = stars;
+  markDirty();
+  const container = document.getElementById(`stars-${reviewIdx}`);
+  container.querySelectorAll('span').forEach((s, i) => {
+    s.classList.toggle('active', i < stars);
+  });
+}
+
+function renderGallery() {
+  const grid = document.getElementById('gallery-grid');
+  grid.innerHTML = siteData.gallery.map((g, i) => `
+    <div class="gallery-slot" onclick="promptImageUrl(${i})">
+      ${g.url ? `<img src="${g.url}" alt="${g.alt}" onerror="this.style.display='none'" />` : `<div class="slot-num">${i+1}</div><div class="upload-label">Click to add photo URL</div>`}
+      <div class="overlay">
+        ${g.url
+          ? `<button class="remove-btn" onclick="event.stopPropagation();removeGalleryImage(${i})">Remove</button>`
+          : `<div class="upload-icon">🔗</div><div class="upload-label" style="color:#fff">Paste image URL</div>`
+        }
+      </div>
+    </div>
+  `).join('');
+}
+
+function promptImageUrl(idx) {
+  const url = prompt('Paste the direct image URL (from Google Drive, Imgur, etc.):');
+  if (url && url.trim()) {
+    siteData.gallery[idx].url = url.trim();
+    siteData.gallery[idx].alt = `Detailing photo ${idx + 1}`;
+    markDirty();
+    renderGallery();
+  }
+}
+
+function removeGalleryImage(idx) {
+  siteData.gallery[idx] = { url: '', alt: '' };
+  markDirty();
+  renderGallery();
+}
+
+function renderContact() {
+  const c = siteData.contact;
+  document.getElementById('contact-phone').value = c.phone || '';
+  document.getElementById('contact-email').value = c.email || '';
+  document.getElementById('contact-location').value = c.location || '';
+  document.getElementById('contact-hours').value = c.hours || '';
+  document.getElementById('contact-bio').value = c.bio || '';
+}
+
+function loadSettings() {
+  if (FIREBASE_CONFIG) {
+    document.getElementById('fb-apikey').value = FIREBASE_CONFIG.apiKey || '';
+    document.getElementById('fb-authdomain').value = FIREBASE_CONFIG.authDomain || '';
+    document.getElementById('fb-dburl').value = FIREBASE_CONFIG.databaseURL || '';
+    document.getElementById('fb-projectid').value = FIREBASE_CONFIG.projectId || '';
+  }
+}
+
+function collectFormData() {
+  siteData.contact = {
+    phone: document.getElementById('contact-phone').value,
+    email: document.getElementById('contact-email').value,
+    location: document.getElementById('contact-location').value,
+    hours: document.getElementById('contact-hours').value,
+    bio: document.getElementById('contact-bio').value,
+  };
+}
+
+// =============================================
+//  INIT
+// =============================================
+function initApp() {
+  initFirebase();
+}
+</script>
+</body>
+</html>
