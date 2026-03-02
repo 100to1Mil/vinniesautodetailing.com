@@ -200,6 +200,36 @@ body {
 .save-status { font-size: 12px; color: var(--green); margin-left: 16px; opacity: 0; transition: opacity 0.3s; }
 .save-status.show { opacity: 1; }
 
+  /* Toast notification */
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #1a1a1a;
+    border: 1px solid var(--green);
+    color: var(--green);
+    font-family: "DM Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 14px 28px;
+    border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    z-index: 9999;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  .toast.error {
+    border-color: #ff6b6b;
+    color: #ff6b6b;
+  }
+
 /* CARDS */
 .card {
   background: var(--card);
@@ -460,6 +490,12 @@ textarea { resize: vertical; min-height: 80px; }
     <div class="nav-item" onclick="showPage('contact')" data-page="contact">
       <span class="nav-icon">📞</span><span>Contact Info</span>
     </div>
+    <div class="nav-item" onclick="showPage('seo')" data-page="seo">
+      <span class="nav-icon">🔍</span><span>SEO</span>
+    </div>
+    <div class="nav-item" onclick="showPage('analytics')" data-page="analytics">
+      <span class="nav-icon">📊</span><span>Analytics</span>
+    </div>
     <div class="nav-item" onclick="showPage('settings')" data-page="settings">
       <span class="nav-icon">⚙️</span><span>Settings</span>
     </div>
@@ -577,6 +613,140 @@ textarea { resize: vertical; min-height: 80px; }
       </div>
     </div>
 
+    <!-- SEO PAGE -->
+    <div class="page" id="page-seo">
+      <div class="page-title">SEO Settings</div>
+      <p class="page-sub">Control how your site appears in Google search results. Keep titles under 60 characters and descriptions under 160.</p>
+
+      <div class="card">
+        <div class="card-title">Page Identity</div>
+        <div>
+          <label>Page Title <span style="color:var(--muted);font-weight:300;text-transform:none;letter-spacing:0">(shown in browser tab & Google results)</span></label>
+          <input type="text" id="seo-title" placeholder="Vinnie's Auto Detailing — Brookville, PA" oninput="updateSeoPreview();markDirty()" maxlength="60" />
+          <div style="font-size:11px;color:var(--muted);margin-top:-12px;margin-bottom:16px;">
+            <span id="seo-title-count">0</span>/60 characters
+          </div>
+        </div>
+        <div>
+          <label>Meta Description <span style="color:var(--muted);font-weight:300;text-transform:none;letter-spacing:0">(the snippet shown under your link in Google)</span></label>
+          <textarea id="seo-desc" placeholder="Professional auto detailing and ceramic coating in Brookville, PA. Full details, ceramic coatings, and add-on services. Get a free quote today." oninput="updateSeoPreview();markDirty()" maxlength="160" style="min-height:70px"></textarea>
+          <div style="font-size:11px;color:var(--muted);margin-top:-12px;margin-bottom:16px;">
+            <span id="seo-desc-count">0</span>/160 characters
+          </div>
+        </div>
+        <div>
+          <label>Keywords <span style="color:var(--muted);font-weight:300;text-transform:none;letter-spacing:0">(comma separated — less important than title/desc but still useful)</span></label>
+          <input type="text" id="seo-keywords" placeholder="auto detailing Brookville PA, ceramic coating, car detailing Jefferson County" oninput="markDirty()" />
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Google Preview</div>
+        <div style="background:#0a0a0a;border:1px solid #333;border-radius:10px;padding:20px 24px;font-family:Arial,sans-serif;">
+          <div style="font-size:12px;color:#aaa;margin-bottom:4px;">vinniesautodetailing.com</div>
+          <div id="preview-title" style="font-size:18px;color:#8ab4f8;margin-bottom:4px;line-height:1.3;">Vinnie's Auto Detailing — Brookville, PA</div>
+          <div id="preview-desc" style="font-size:13px;color:#bdc1c6;line-height:1.6;">Professional auto detailing and ceramic coating in Brookville, PA. Full details, ceramic coatings, and add-on services. Get a free quote today.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Local Business Info <span class="badge">Helps Google Maps</span></div>
+        <div class="form-row">
+          <div>
+            <label>Business Name</label>
+            <input type="text" id="seo-business" placeholder="Vinnie's Auto Detailing" oninput="markDirty()" />
+          </div>
+          <div>
+            <label>City / Region</label>
+            <input type="text" id="seo-city" placeholder="Brookville, PA" oninput="markDirty()" />
+          </div>
+        </div>
+        <div>
+          <label>Google Business Profile URL <span style="color:var(--muted);font-weight:300;text-transform:none;letter-spacing:0">(paste your Google Maps link)</span></label>
+          <input type="text" id="seo-gmb" placeholder="https://maps.google.com/..." oninput="markDirty()" />
+        </div>
+        <div style="background:rgba(184,144,46,0.08);border:1px solid rgba(184,144,46,0.25);border-radius:8px;padding:14px 16px;font-size:12px;color:#aaa;line-height:1.7;">
+          💡 <strong style="color:var(--gold)">Pro tip:</strong> The single biggest thing you can do for local SEO is keep your <strong style="color:#ddd">Google Business Profile</strong> updated with photos, hours, and responding to reviews. Go to <a href="https://business.google.com" target="_blank" style="color:var(--blue)">business.google.com</a> to claim/manage your listing.
+        </div>
+      </div>
+    </div>
+
+    <!-- ANALYTICS PAGE -->
+    <div class="page" id="page-analytics">
+      <div class="page-title">Analytics</div>
+      <p class="page-sub">Traffic overview for vinniesautodetailing.com — powered by Google Analytics.</p>
+
+      <div id="analytics-no-ga" style="display:block;">
+        <div class="setup-banner">
+          <h3>📈 Connect Google Analytics</h3>
+          <p>To see real traffic data, you need a Google Analytics Measurement ID. It looks like <strong style="color:#88d4ff">G-XXXXXXXXXX</strong>.</p>
+          <code>1. Go to analytics.google.com
+2. Click "Start measuring" → create an account
+3. Set up a Web property → enter vinniesautodetailing.com
+4. Copy your Measurement ID (starts with G-)
+5. Paste it in Settings → Google Analytics below</code>
+        </div>
+
+        <!-- Demo stats while GA not connected -->
+        <div style="opacity:0.4;pointer-events:none;">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;">
+            <div class="card" style="text-align:center;padding:24px 16px;">
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--red);">—</div>
+              <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;">Visitors (30d)</div>
+            </div>
+            <div class="card" style="text-align:center;padding:24px 16px;">
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--blue);">—</div>
+              <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;">Page Views</div>
+            </div>
+            <div class="card" style="text-align:center;padding:24px 16px;">
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--green);">—</div>
+              <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;">Avg. Session</div>
+            </div>
+            <div class="card" style="text-align:center;padding:24px 16px;">
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--gold);">—</div>
+              <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;">Bounce Rate</div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="text-align:center;padding:40px;">
+          <div style="font-size:40px;margin-bottom:12px;">📊</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--white);margin-bottom:8px;">No Data Yet</div>
+          <p style="font-size:13px;color:var(--muted);max-width:380px;margin:0 auto 20px;">Connect Google Analytics to start seeing who's visiting your site, where they're coming from, and what they're looking at.</p>
+          <button onclick="showPage('settings')" style="background:var(--red);color:#fff;border:none;border-radius:8px;padding:11px 24px;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:0.08em;cursor:pointer;">Go to Settings → Connect GA</button>
+        </div>
+      </div>
+
+      <div id="analytics-connected" style="display:none;">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;" id="ga-stat-cards">
+          <div class="card" style="text-align:center;padding:24px 16px;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--red);" id="ga-visitors">—</div>
+            <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;">Visitors (30d)</div>
+          </div>
+          <div class="card" style="text-align:center;padding:24px 16px;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--blue);" id="ga-pageviews">—</div>
+            <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;">Page Views</div>
+          </div>
+          <div class="card" style="text-align:center;padding:24px 16px;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--green);" id="ga-session">—</div>
+            <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;">Avg. Session</div>
+          </div>
+          <div class="card" style="text-align:center;padding:24px 16px;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--gold);" id="ga-bounce">—</div>
+            <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;">Bounce Rate</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Top Traffic Sources</div>
+          <div id="ga-sources" style="font-size:13px;color:var(--muted);padding:20px 0;text-align:center;">Loading...</div>
+        </div>
+        <div class="card" style="margin-top:0;">
+          <div class="card-title">Open Full Dashboard</div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">For detailed reports, charts, and deeper insights open Google Analytics directly.</p>
+          <a href="https://analytics.google.com" target="_blank" style="display:inline-block;background:var(--blue);color:#fff;text-decoration:none;border-radius:8px;padding:11px 24px;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:0.08em;">Open Google Analytics ↗</a>
+        </div>
+      </div>
+    </div>
+
     <!-- SETTINGS PAGE -->
     <div class="page" id="page-settings">
       <div class="page-title">Settings</div>
@@ -597,24 +767,34 @@ textarea { resize: vertical; min-height: 80px; }
         <div class="form-row">
           <div>
             <label>API Key</label>
-            <input type="text" id="fb-apikey" placeholder="AIzaSy..." oninput="markDirty()" />
+            <input type="text" id="fb-apikey" value="AIzaSyDXDvXWMFFe_PP9P_ikY1X3t6MRya6V7ng" oninput="markDirty()" />
           </div>
           <div>
             <label>Auth Domain</label>
-            <input type="text" id="fb-authdomain" placeholder="your-app.firebaseapp.com" oninput="markDirty()" />
+            <input type="text" id="fb-authdomain" value="vinnies-detailing.firebaseapp.com" oninput="markDirty()" />
           </div>
         </div>
         <div class="form-row">
           <div>
             <label>Database URL</label>
-            <input type="text" id="fb-dburl" placeholder="https://your-app-default-rtdb.firebaseio.com" oninput="markDirty()" />
+            <input type="text" id="fb-dburl" value="https://vinnies-detailing-default-rtdb.firebaseio.com" oninput="markDirty()" />
           </div>
           <div>
             <label>Project ID</label>
-            <input type="text" id="fb-projectid" placeholder="your-project-id" oninput="markDirty()" />
+            <input type="text" id="fb-projectid" value="vinnies-detailing" oninput="markDirty()" />
           </div>
         </div>
         <button onclick="saveFirebaseConfig()" style="background:var(--blue);color:#fff;border:none;border-radius:8px;padding:11px 24px;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:0.08em;cursor:pointer;">Connect Firebase</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Google Analytics</div>
+        <div>
+          <label>Measurement ID</label>
+          <input type="text" id="ga-id" value="G-4ZRVG6KTLK" oninput="markDirty()" />
+        </div>
+        <button onclick="saveGaId()" style="background:var(--blue);color:#fff;border:none;border-radius:8px;padding:11px 24px;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:0.08em;cursor:pointer;">Connect Analytics</button>
+        <p id="ga-msg" style="font-size:12px;margin-top:10px;color:var(--green);display:none;">✓ Measurement ID saved! Add the tracking script to your site to start collecting data.</p>
       </div>
 
       <div class="card">
@@ -652,7 +832,16 @@ textarea { resize: vertical; min-height: 80px; }
 //  CONFIG — Paste your Firebase config here
 //  after setting up your Firebase project
 // =============================================
-let FIREBASE_CONFIG = JSON.parse(localStorage.getItem('fb_config') || 'null');
+let FIREBASE_CONFIG = JSON.parse(localStorage.getItem('fb_config') || 'null') || {
+  apiKey: "AIzaSyDXDvXWMFFe_PP9P_ikY1X3t6MRya6V7ng",
+  authDomain: "vinnies-detailing.firebaseapp.com",
+  databaseURL: "https://vinnies-detailing-default-rtdb.firebaseio.com",
+  projectId: "vinnies-detailing",
+  storageBucket: "vinnies-detailing.firebasestorage.app",
+  messagingSenderId: "488858744786",
+  appId: "1:488858744786:web:47db6b2cbdf1e78d11fa0b",
+  measurementId: "G-4ZRVG6KTLK"
+};
 const ADMIN_PASSWORD_KEY = 'vinnies_admin_pwd';
 const DEFAULT_PASSWORD = 'vinnie2024'; // Change this after first login!
 
@@ -851,6 +1040,16 @@ function markDirty() {
   document.getElementById('save-bar').classList.add('visible');
 }
 
+function showToast(msg, isError) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.className = 'toast' + (isError ? ' error' : '');
+  // Force reflow so transition fires
+  void toast.offsetWidth;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
 async function saveAll() {
   const btn = document.getElementById('save-btn');
   btn.disabled = true;
@@ -860,11 +1059,9 @@ async function saveAll() {
     await saveToFirebase(siteData);
     isDirty = false;
     document.getElementById('save-bar').classList.remove('visible');
-    const status = document.getElementById('save-status');
-    status.classList.add('show');
-    setTimeout(() => status.classList.remove('show'), 2500);
+    showToast('✓ Changes saved successfully!', false);
   } catch(e) {
-    alert('Save failed. Check your Firebase connection.');
+    showToast('✗ Save failed — check Firebase connection', true);
   }
   btn.disabled = false;
   btn.textContent = 'Save Changes';
@@ -881,6 +1078,7 @@ function renderAll() {
   renderReviews();
   renderGallery();
   renderContact();
+  renderSeo();
   loadSettings();
 }
 
@@ -1034,6 +1232,9 @@ function loadSettings() {
     document.getElementById('fb-dburl').value = FIREBASE_CONFIG.databaseURL || '';
     document.getElementById('fb-projectid').value = FIREBASE_CONFIG.projectId || '';
   }
+  // Pre-fill GA ID from config
+  const gaId = localStorage.getItem('ga_measurement_id') || FIREBASE_CONFIG.measurementId || '';
+  if (gaId) document.getElementById('ga-id').value = gaId;
 }
 
 function collectFormData() {
@@ -1044,6 +1245,80 @@ function collectFormData() {
     hours: document.getElementById('contact-hours').value,
     bio: document.getElementById('contact-bio').value,
   };
+  collectSeoData();
+}
+
+// =============================================
+//  SEO
+// =============================================
+function renderSeo() {
+  const seo = siteData.seo || {};
+  document.getElementById('seo-title').value = seo.title || '';
+  document.getElementById('seo-desc').value = seo.desc || '';
+  document.getElementById('seo-keywords').value = seo.keywords || '';
+  document.getElementById('seo-business').value = seo.business || '';
+  document.getElementById('seo-city').value = seo.city || '';
+  document.getElementById('seo-gmb').value = seo.gmb || '';
+  updateSeoPreview();
+}
+
+function updateSeoPreview() {
+  const title = document.getElementById('seo-title').value || 'Vinnie\'s Auto Detailing — Brookville, PA';
+  const desc = document.getElementById('seo-desc').value || 'Professional auto detailing and ceramic coating in Brookville, PA.';
+  document.getElementById('preview-title').textContent = title;
+  document.getElementById('preview-desc').textContent = desc;
+  document.getElementById('seo-title-count').textContent = document.getElementById('seo-title').value.length;
+  document.getElementById('seo-desc-count').textContent = document.getElementById('seo-desc').value.length;
+}
+
+function collectSeoData() {
+  siteData.seo = {
+    title: document.getElementById('seo-title').value,
+    desc: document.getElementById('seo-desc').value,
+    keywords: document.getElementById('seo-keywords').value,
+    business: document.getElementById('seo-business').value,
+    city: document.getElementById('seo-city').value,
+    gmb: document.getElementById('seo-gmb').value,
+  };
+}
+
+// =============================================
+//  GOOGLE ANALYTICS
+// =============================================
+function saveGaId() {
+  const id = document.getElementById('ga-id').value.trim();
+  if (!id || !id.startsWith('G-')) {
+    alert('Please enter a valid Measurement ID starting with G-');
+    return;
+  }
+  localStorage.setItem('ga_measurement_id', id);
+  document.getElementById('ga-msg').style.display = 'block';
+  checkGaConnection();
+}
+
+function checkGaConnection() {
+  const id = localStorage.getItem('ga_measurement_id') || FIREBASE_CONFIG.measurementId;
+  if (id) {
+    if (document.getElementById('ga-id')) document.getElementById('ga-id').value = id;
+    if (!localStorage.getItem('ga_measurement_id')) localStorage.setItem('ga_measurement_id', id);
+    document.getElementById('analytics-no-ga').style.display = 'none';
+    document.getElementById('analytics-connected').style.display = 'block';
+    loadGaStats(id);
+  }
+}
+
+function loadGaStats(id) {
+  // GA Data API requires OAuth — show helpful message instead
+  document.getElementById('ga-visitors').textContent = '—';
+  document.getElementById('ga-pageviews').textContent = '—';
+  document.getElementById('ga-session').textContent = '—';
+  document.getElementById('ga-bounce').textContent = '—';
+  document.getElementById('ga-sources').innerHTML = `
+    <div style="padding:16px;text-align:center;">
+      <p style="margin-bottom:12px;">GA ID <strong style="color:#88d4ff">${id}</strong> saved ✓</p>
+      <p style="font-size:12px;color:var(--muted);max-width:420px;margin:0 auto;">Live stats require the Google Analytics Data API with OAuth — a bit complex to set up here. Click below to view your full dashboard directly in Google Analytics.</p>
+    </div>
+  `;
 }
 
 // =============================================
@@ -1051,7 +1326,13 @@ function collectFormData() {
 // =============================================
 function initApp() {
   initFirebase();
+  // Auto-save GA ID from Firebase config if not already set
+  if (!localStorage.getItem('ga_measurement_id') && FIREBASE_CONFIG.measurementId) {
+    localStorage.setItem('ga_measurement_id', FIREBASE_CONFIG.measurementId);
+  }
+  checkGaConnection();
 }
 </script>
+  <div class="toast" id="toast"></div>
 </body>
 </html>
