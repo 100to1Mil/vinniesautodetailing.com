@@ -578,7 +578,7 @@ textarea { resize: vertical; min-height: 80px; }
       <div class="card">
         <div class="gallery-editor-grid" id="gallery-grid"></div>
       </div>
-      <p style="font-size:12px;color:var(--muted);margin-top:12px;">📌 Images are stored as URLs. For best results, upload photos to Google Drive or Imgur and paste the direct link.</p>
+      <p style="font-size:12px;color:var(--muted);margin-top:12px;">📌 Click any slot to upload a photo directly from your device. Hit Save after uploading.</p>
     </div>
 
     <!-- CONTACT PAGE -->
@@ -1188,26 +1188,34 @@ function setStars(reviewIdx, stars) {
 function renderGallery() {
   const grid = document.getElementById('gallery-grid');
   grid.innerHTML = siteData.gallery.map((g, i) => `
-    <div class="gallery-slot" onclick="promptImageUrl(${i})">
-      ${g.url ? `<img src="${g.url}" alt="${g.alt}" onerror="this.style.display='none'" />` : `<div class="slot-num">${i+1}</div><div class="upload-label">Click to add photo URL</div>`}
+    <div class="gallery-slot" onclick="triggerFilePicker(${i})">
+      <input type="file" id="file-input-${i}" accept="image/*" style="display:none" onchange="handleFileUpload(event,${i})" />
+      ${g.url ? `<img src="${g.url}" alt="${g.alt}" onerror="this.style.display='none'" />` : `<div class="slot-num">${i+1}</div><div class="upload-label">Click to upload photo</div>`}
       <div class="overlay">
         ${g.url
           ? `<button class="remove-btn" onclick="event.stopPropagation();removeGalleryImage(${i})">Remove</button>`
-          : `<div class="upload-icon">🔗</div><div class="upload-label" style="color:#fff">Paste image URL</div>`
+          : `<div class="upload-icon">📷</div><div class="upload-label" style="color:#fff">Upload from device</div>`
         }
       </div>
     </div>
   `).join('');
 }
 
-function promptImageUrl(idx) {
-  const url = prompt('Paste the direct image URL (from Google Drive, Imgur, etc.):');
-  if (url && url.trim()) {
-    siteData.gallery[idx].url = url.trim();
+function triggerFilePicker(idx) {
+  document.getElementById('file-input-' + idx).click();
+}
+
+function handleFileUpload(event, idx) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    siteData.gallery[idx].url = e.target.result;
     siteData.gallery[idx].alt = `Detailing photo ${idx + 1}`;
     markDirty();
     renderGallery();
-  }
+  };
+  reader.readAsDataURL(file);
 }
 
 function removeGalleryImage(idx) {
