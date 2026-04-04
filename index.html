@@ -987,7 +987,7 @@
     if (data.detailing && data.detailing.length) {
       const tbody = document.getElementById('detailing-tbody');
       if (tbody) {
-        tbody.innerHTML = data.detailing.map(r => `
+        tbody.innerHTML = data.detailing.filter(r => r && r.size).map(r => `
           <tr>
             <td>${r.size}</td>
             <td>${r.examples}</td>

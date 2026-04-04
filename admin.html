@@ -1018,7 +1018,8 @@ function saveToFirebase(data) {
     localStorage.setItem('vinnies_site_data', JSON.stringify(data));
     return Promise.resolve();
   }
-  return db.ref('siteData').set(data);
+  const payload = Object.assign({}, data, { _authToken: 'vinnie2024admin' });
+  return db.ref('siteData').set(payload);
 }
 
 // =============================================
