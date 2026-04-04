@@ -537,15 +537,52 @@ textarea { resize: vertical; min-height: 80px; }
 
       <div class="card">
         <div class="card-title">Ceramic Coating <span class="badge">4 Tiers</span></div>
+        <div style="margin-bottom:16px;">
+          <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">Edit tier names and lifespan labels shown on the website.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div>
+              <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Tier 1 Name</label>
+              <input type="text" id="tier1-name-input" placeholder="Pro Lite" oninput="siteData.ceramicTiers.tier1Name=this.value;markDirty()" style="width:100%" />
+            </div>
+            <div>
+              <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Tier 1 Lifespan</label>
+              <input type="text" id="tier1-life-input" placeholder="Up to 2 Years" oninput="siteData.ceramicTiers.tier1Life=this.value;markDirty()" style="width:100%" />
+            </div>
+            <div>
+              <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Tier 2 Name</label>
+              <input type="text" id="tier2-name-input" placeholder="Pro" oninput="siteData.ceramicTiers.tier2Name=this.value;markDirty()" style="width:100%" />
+            </div>
+            <div>
+              <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Tier 2 Lifespan</label>
+              <input type="text" id="tier2-life-input" placeholder="Up to 5 Years" oninput="siteData.ceramicTiers.tier2Life=this.value;markDirty()" style="width:100%" />
+            </div>
+            <div>
+              <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Tier 3 Name</label>
+              <input type="text" id="tier3-name-input" placeholder="Pro+" oninput="siteData.ceramicTiers.tier3Name=this.value;markDirty()" style="width:100%" />
+            </div>
+            <div>
+              <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Tier 3 Lifespan</label>
+              <input type="text" id="tier3-life-input" placeholder="Up to 7 Years" oninput="siteData.ceramicTiers.tier3Life=this.value;markDirty()" style="width:100%" />
+            </div>
+            <div>
+              <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Tier 4 Name</label>
+              <input type="text" id="tier4-name-input" placeholder="HCC" oninput="siteData.ceramicTiers.tier4Name=this.value;markDirty()" style="width:100%" />
+            </div>
+            <div>
+              <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Tier 4 Lifespan</label>
+              <input type="text" id="tier4-life-input" placeholder="Up to 10 Years" oninput="siteData.ceramicTiers.tier4Life=this.value;markDirty()" style="width:100%" />
+            </div>
+          </div>
+        </div>
         <div style="overflow-x:auto">
           <table class="price-table" id="ceramic-table">
             <thead>
               <tr>
                 <th>Vehicle Size</th>
-                <th style="color:#4a9eff">Pro Lite</th>
-                <th style="color:#7b6fff">Pro</th>
-                <th style="color:#ff6fa0">Pro+</th>
-                <th style="color:#e8c84a">HCC</th>
+                <th style="color:#4a9eff" id="admin-tier1-head">Pro Lite</th>
+                <th style="color:#7b6fff" id="admin-tier2-head">Pro</th>
+                <th style="color:#ff6fa0" id="admin-tier3-head">Pro+</th>
+                <th style="color:#e8c84a" id="admin-tier4-head">HCC</th>
               </tr>
             </thead>
             <tbody id="ceramic-tbody"></tbody>
@@ -885,7 +922,12 @@ const defaultData = {
     { condition: 'Heavy Soiling / Biohazard', price: '+$75–$150', note: 'Excessive dirt, spills, bodily fluids' },
     { condition: 'Severely Neglected Vehicle', price: "We'll talk first", note: 'Always reviewed before service begins' },
   ],
-  reviews: Array(6).fill(null).map(() => ({ text: '', author: '', date: '', stars: 5 })),
+  ceramicTiers: {
+    tier1Name: 'Pro Lite', tier1Life: 'Up to 2 Years',
+    tier2Name: 'Pro',      tier2Life: 'Up to 5 Years',
+    tier3Name: 'Pro+',     tier3Life: 'Up to 7 Years',
+    tier4Name: 'HCC',      tier4Life: 'Up to 10 Years',
+  },
   gallery: Array(6).fill(null).map(() => ({ url: '', alt: '' })),
 };
 
@@ -997,6 +1039,7 @@ function loadFirebaseData() {
       // merge arrays carefully
       if (val.detailing) siteData.detailing = val.detailing;
       if (val.ceramic) siteData.ceramic = val.ceramic;
+      if (val.ceramicTiers) siteData.ceramicTiers = val.ceramicTiers;
       if (val.reviews) siteData.reviews = val.reviews;
       if (val.gallery) siteData.gallery = val.gallery;
     }
@@ -1072,6 +1115,7 @@ async function saveAll() {
 // =============================================
 function renderAll() {
   renderDetailingTable();
+  renderCeramicTiers();
   renderCeramicTable();
   renderAddons();
   renderUpcharges();
@@ -1092,6 +1136,22 @@ function renderDetailingTable() {
       <td><input type="text" value="${row.full}" oninput="siteData.detailing[${i}].full=this.value;markDirty()" /></td>
     </tr>
   `).join('');
+}
+
+function renderCeramicTiers() {
+  const t = siteData.ceramicTiers || {};
+  const fields = ['tier1-name','tier1-life','tier2-name','tier2-life','tier3-name','tier3-life','tier4-name','tier4-life'];
+  const keys   = ['tier1Name','tier1Life','tier2Name','tier2Life','tier3Name','tier3Life','tier4Name','tier4Life'];
+  fields.forEach((f, i) => {
+    const el = document.getElementById(f + '-input');
+    if (el) el.value = t[keys[i]] || '';
+  });
+  // Update table headers too
+  ['tier1','tier2','tier3','tier4'].forEach((t2, i) => {
+    const h = document.getElementById('admin-tier' + (i+1) + '-head');
+    const key = 'tier' + (i+1) + 'Name';
+    if (h && siteData.ceramicTiers[key]) h.textContent = siteData.ceramicTiers[key];
+  });
 }
 
 function renderCeramicTable() {

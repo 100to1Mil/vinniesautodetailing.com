@@ -675,8 +675,8 @@
 
     <!-- Coating -->
     <div style="background:var(--card);border:1px solid var(--border);border-top:3px solid var(--tier1);border-radius:10px;padding:24px;">
-      <div style="font-family:'Playfair Display',serif;font-size:22px;color:var(--tier1);margin-bottom:4px;">Coating</div>
-      <div style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Up to 2 Years</div>
+      <div id="tier1-name" style="font-family:'Playfair Display',serif;font-size:22px;color:var(--tier1);margin-bottom:4px;">Pro Lite</div>
+      <div id="tier1-life" style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Up to 2 Years</div>
       <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px;">
         <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier1);flex-shrink:0;">✓</span> Entry-grade coating product</li>
         <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier1);flex-shrink:0;">✓</span> Hydrophobic protection — water beads off</li>
@@ -688,8 +688,8 @@
 
     <!-- Pro -->
     <div style="background:var(--card);border:1px solid var(--border);border-top:3px solid var(--tier2);border-radius:10px;padding:24px;">
-      <div style="font-family:'Playfair Display',serif;font-size:22px;color:var(--tier2);margin-bottom:4px;">Pro</div>
-      <div style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Up to 5 Years</div>
+      <div id="tier2-name" style="font-family:'Playfair Display',serif;font-size:22px;color:var(--tier2);margin-bottom:4px;">Pro</div>
+      <div id="tier2-life" style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Up to 5 Years</div>
       <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px;">
         <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier2);flex-shrink:0;">✓</span> Mid-grade coating product</li>
         <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier2);flex-shrink:0;">✓</span> Stronger hardness &amp; longer-lasting hydrophobics</li>
@@ -701,8 +701,8 @@
 
     <!-- Pro+ -->
     <div style="background:var(--card);border:1px solid var(--border);border-top:3px solid var(--tier3);border-radius:10px;padding:24px;">
-      <div style="font-family:'Playfair Display',serif;font-size:22px;color:var(--tier3);margin-bottom:4px;">Pro+</div>
-      <div style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Up to 7 Years</div>
+      <div id="tier3-name" style="font-family:'Playfair Display',serif;font-size:22px;color:var(--tier3);margin-bottom:4px;">Pro+</div>
+      <div id="tier3-life" style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Up to 7 Years</div>
       <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px;">
         <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier3);flex-shrink:0;">✓</span> Professional-grade coating product</li>
         <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier3);flex-shrink:0;">✓</span> Higher hardness rating than Pro</li>
@@ -714,8 +714,8 @@
 
     <!-- HCC -->
     <div style="background:var(--card);border:1px solid var(--border);border-top:3px solid var(--gold);border-radius:10px;padding:24px;">
-      <div style="font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);margin-bottom:4px;">HCC</div>
-      <div style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Up to 10 Years</div>
+      <div id="tier4-name" style="font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);margin-bottom:4px;">HCC</div>
+      <div id="tier4-life" style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Up to 10 Years</div>
       <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px;">
         <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--gold);flex-shrink:0;">✓</span> Highest-grade coating product available</li>
         <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--gold);flex-shrink:0;">✓</span> Maximum hardness &amp; longevity</li>
@@ -1035,6 +1035,19 @@
       const email = document.getElementById('contact-email-display');
       if (phone && data.contact.phone) phone.textContent = data.contact.phone;
       if (email && data.contact.email) email.textContent = data.contact.email;
+    }
+
+    // --- CERAMIC TIER NAMES ---
+    if (data.ceramicTiers) {
+      const t = data.ceramicTiers;
+      if (t.tier1Name) document.getElementById('tier1-name').textContent = t.tier1Name;
+      if (t.tier1Life) document.getElementById('tier1-life').textContent = t.tier1Life;
+      if (t.tier2Name) document.getElementById('tier2-name').textContent = t.tier2Name;
+      if (t.tier2Life) document.getElementById('tier2-life').textContent = t.tier2Life;
+      if (t.tier3Name) document.getElementById('tier3-name').textContent = t.tier3Name;
+      if (t.tier3Life) document.getElementById('tier3-life').textContent = t.tier3Life;
+      if (t.tier4Name) document.getElementById('tier4-name').textContent = t.tier4Name;
+      if (t.tier4Life) document.getElementById('tier4-life').textContent = t.tier4Life;
     }
 
   }).catch(err => console.log('Firebase sync skipped:', err));
