@@ -294,8 +294,7 @@
 
   .ceramic-table thead th:nth-child(3) { color: #7dc6ff; }
   .ceramic-table thead th:nth-child(4) { color: #b8b0ff; }
-  .ceramic-table thead th:nth-child(5) { color: #ffaacc; }
-  .ceramic-table thead th:nth-child(6) { color: #ffd67a; }
+  .ceramic-table thead th:nth-child(5) { color: #ffd67a; }
   .lifespan-row th {
     padding: 8px 16px;
     font-size: 10px;
@@ -312,8 +311,7 @@
   .lifespan-row th:nth-child(6) { color: rgba(255,214,122,0.75); }
   .ceramic-table td:nth-child(3) .price { color: var(--tier1); }
   .ceramic-table td:nth-child(4) .price { color: var(--tier2); }
-  .ceramic-table td:nth-child(5) .price { color: var(--tier3); }
-  .ceramic-table td:nth-child(6) .price { color: var(--tier4); }
+  .ceramic-table td:nth-child(5) .price { color: var(--tier4); }
 
   /* ─── NOTES ─── */
   .notes {
@@ -471,6 +469,7 @@
     <ul class="nav-links">
       <li><a href="#detailing">Detailing</a></li>
       <li><a href="#ceramic">Ceramic</a></li>
+      <li><a href="#tint">Window Tint</a></li>
       <li><a href="#gallery">Gallery</a></li>
       <li><a href="#reviews">Reviews</a></li>
       <li><a href="#contact">Request a Quote</a></li>
@@ -499,8 +498,6 @@
   <div class="section-title">Detailing<br>Pricing Guide</div>
 
   <div class="legend">
-    <div class="leg leg-int"><span class="pkg">Interior Only</span><span class="desc">Full interior service</span></div>
-    <div class="leg leg-ext"><span class="pkg">Exterior Only</span><span class="desc">Full exterior service</span></div>
     <div class="leg leg-full"><span class="pkg">Full Detail</span><span class="desc">Complete interior + exterior</span></div>
   </div>
 
@@ -510,16 +507,15 @@
       <thead>
         <tr>
           <th>Vehicle Size</th><th>Examples</th>
-          <th>Interior Only</th><th>Exterior Only</th><th>Full Detail</th>
+          <th>Full Detail</th>
         </tr>
       </thead>
       <tbody id="detailing-tbody">
-        <tr><td>2-Door / Coupe</td><td>Mustang, Camaro, Civic Coupe</td><td><span class="price">Starting at $120</span></td><td><span class="price">Starting at $85</span></td><td><span class="price">Starting at $175</span></td></tr>
-        <tr><td>Small Sedan</td><td>Civic, Corolla</td><td><span class="price">Starting at $125</span></td><td><span class="price">Starting at $90</span></td><td><span class="price">Starting at $185</span></td></tr>
-        <tr><td>Small SUV / Crossover</td><td>RAV4, CR-V, Equinox</td><td><span class="price">Starting at $140</span></td><td><span class="price">Starting at $100</span></td><td><span class="price">Starting at $200</span></td></tr>
-        <tr><td>Mid-Size SUV</td><td>Pilot, Explorer</td><td><span class="price">Starting at $150</span></td><td><span class="price">Starting at $110</span></td><td><span class="price">Starting at $225</span></td></tr>
-        <tr><td>Large SUV / Crew Cab</td><td>Crew F-150, Ram 1500, Silverado</td><td><span class="price">Starting at $160</span></td><td><span class="price">Starting at $115</span></td><td><span class="price">Starting at $250</span></td></tr>
-        <tr><td>Lifted / XL / Dually</td><td>Tahoe, Suburban, 2500s, Capped Trucks</td><td><span class="price">Starting at $175</span></td><td><span class="price">Starting at $125</span></td><td><span class="price">Starting at $275</span></td></tr>
+        <tr><td>Coupe / Small Car</td><td>Mustang, Camaro, Civic, Corolla</td><td><span class="price">Starting at $200</span></td></tr>
+        <tr><td>Sedan / Small SUV / Crossover</td><td>Camry, Accord, RAV4, CR-V, Equinox</td><td><span class="price">Starting at $225</span></td></tr>
+        <tr><td>Mid-Size SUV (3rd Row) / Crew Cab Truck</td><td>Pilot, Explorer, F-150, Ram 1500, Silverado</td><td><span class="price">Starting at $250</span></td></tr>
+        <tr><td>Large SUV</td><td>Tahoe, Suburban, Expedition</td><td><span class="price">Starting at $275</span></td></tr>
+        <tr><td>Lifted / XL / Dually</td><td>Lifted trucks, 2500s, Capped Trucks</td><td><span class="price">Starting at $300</span></td></tr>
       </tbody>
     </table>
   </div>
@@ -538,7 +534,7 @@
     <div class="includes-card exterior">
       <h3>Exterior</h3>
       <div class="check-item"><span class="icon">✅</span><span>Wheels and tires scrubbed and decontaminated</span></div>
-      <div class="check-item"><span class="icon">✅</span><span>Engine detailed and protected <span class="note-inline">(included with Full Detail &amp; Exterior)</span></span></div>
+      <div class="check-item"><span class="icon">✅</span><span>Engine detailed and protected</span></div>
       <div class="check-item"><span class="icon">✅</span><span>Decontamination wash — removes bugs, road grime, and dirt</span></div>
       <div class="check-item"><span class="icon">✅</span><span>Clay bar treatment — restores smooth paint surface</span></div>
       <div class="check-item"><span class="icon">✅</span><span>Pressurized underbody wash</span></div>
@@ -614,8 +610,8 @@
         </tr>
         <tr>
           <td>Engine Detail</td>
-          <td style="text-align:left;color:var(--muted);font-size:12px">Included w/ Full Detail &amp; Exterior · Standalone below</td>
-          <td colspan="5" style="color:var(--full);font-weight:700;font-size:13px;text-align:center">✅ Included with Full Detail &amp; Exterior &nbsp;·&nbsp; Standalone: $50–$75</td>
+          <td style="text-align:left;color:var(--muted);font-size:12px">Included w/ Full Detail · Standalone below</td>
+          <td colspan="5" style="color:var(--full);font-weight:700;font-size:13px;text-align:center">✅ Included with Full Detail &nbsp;·&nbsp; Standalone: $50–$75</td>
         </tr>
         <tr>
           <td>Headlight Restoration</td>
@@ -629,7 +625,7 @@
   <div class="notes">
     <div class="notes-title">Good to Know</div>
     <p class="note">All prices are estimates — final pricing is confirmed after vehicle inspection and before any work begins.</p>
-    <p class="note">Engine detail is included at no additional charge with every Full Detail and Exterior Only package.</p>
+    <p class="note">Engine detail is included at no additional charge with every Full Detail.</p>
     <p class="note">Capped trucks and oversized vehicles are priced at the Lifted / XL / Dually tier.</p>
     <p class="note">Ozone treatment pricing scales with vehicle size due to longer cycle times and interior wipe-down required afterward.</p>
     <p class="note">Headlight restoration: $40 per light or $70 per pair.</p>
@@ -669,62 +665,65 @@
     </div>
   </div>
 
-  <p style="font-size:13px;color:var(--muted);margin-bottom:32px;text-align:center;">Every tier follows the exact same process. All are single-layer applications. The only difference is the grade and longevity of the coating product. Pricing is the same across tiers and confirmed after a free vehicle inspection.</p>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:32px;text-align:center;">Every tier follows the same careful process. All are single-layer applications — the difference is the grade of the coating product and how long it protects your vehicle. All prices are starting prices, confirmed after a free vehicle inspection.</p>
 
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-bottom:36px;">
 
-    <!-- Coating -->
+    <!-- Pro Lite -->
     <div style="background:var(--card);border:1px solid var(--border);border-top:3px solid var(--tier1);border-radius:10px;padding:24px;">
       <div id="tier1-name" style="font-family:'Playfair Display',serif;font-size:22px;color:var(--tier1);margin-bottom:4px;">Pro Lite</div>
-      <div id="tier1-life" style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Up to 2 Years</div>
+      <div id="tier1-life" style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Protects Your Investment</div>
       <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px;">
-        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier1);flex-shrink:0;">✓</span> Entry-grade coating product</li>
-        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier1);flex-shrink:0;">✓</span> Hydrophobic protection — water beads off</li>
-        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier1);flex-shrink:0;">✓</span> UV, bug, bird dropping &amp; water spot resistance</li>
-        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier1);flex-shrink:0;">✓</span> Showroom gloss</li>
-        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier1);flex-shrink:0;">✓</span> Easier snow &amp; ice release in winter</li>
+        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier1);flex-shrink:0;">✓</span> Protects your paint, trim &amp; glass with a durable, easy-care coating</li>
+        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier1);flex-shrink:0;">✓</span> Real gloss and slickness — water and dirt bead right off</li>
+        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier1);flex-shrink:0;">✓</span> Rain-ready in about an hour</li>
+        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier1);flex-shrink:0;">✓</span> A smart way to protect your investment without the full ceramic step-up</li>
       </ul>
     </div>
 
     <!-- Pro -->
     <div style="background:var(--card);border:1px solid var(--border);border-top:3px solid var(--tier2);border-radius:10px;padding:24px;">
       <div id="tier2-name" style="font-family:'Playfair Display',serif;font-size:22px;color:var(--tier2);margin-bottom:4px;">Pro</div>
-      <div id="tier2-life" style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Up to 5 Years</div>
+      <div id="tier2-life" style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Longer-Lasting Protection</div>
       <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px;">
-        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier2);flex-shrink:0;">✓</span> Mid-grade coating product</li>
-        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier2);flex-shrink:0;">✓</span> Stronger hardness &amp; longer-lasting hydrophobics</li>
-        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier2);flex-shrink:0;">✓</span> Stays cleaner longer between washes</li>
-        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier2);flex-shrink:0;">✓</span> Deeper gloss than Coating tier</li>
-        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier2);flex-shrink:0;">✓</span> 5-year warranty</li>
-      </ul>
-    </div>
-
-    <!-- Pro+ -->
-    <div style="background:var(--card);border:1px solid var(--border);border-top:3px solid var(--tier3);border-radius:10px;padding:24px;">
-      <div id="tier3-name" style="font-family:'Playfair Display',serif;font-size:22px;color:var(--tier3);margin-bottom:4px;">Pro+</div>
-      <div id="tier3-life" style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Up to 7 Years</div>
-      <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px;">
-        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier3);flex-shrink:0;">✓</span> Professional-grade coating product</li>
-        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier3);flex-shrink:0;">✓</span> Higher hardness rating than Pro</li>
-        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier3);flex-shrink:0;">✓</span> Richer, deeper gloss</li>
-        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier3);flex-shrink:0;">✓</span> Enhanced chemical &amp; scratch resistance</li>
-        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier3);flex-shrink:0;">✓</span> 7-year warranty</li>
+        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier2);flex-shrink:0;">✓</span> Our most popular tier — serious hydrophobic protection that outlasts Pro Lite</li>
+        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier2);flex-shrink:0;">✓</span> Shields against sun damage, chemicals, road grime &amp; water spots</li>
+        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier2);flex-shrink:0;">✓</span> Safe on paint, trim, leather, metal &amp; glass — one coating, whole vehicle</li>
+        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier2);flex-shrink:0;">✓</span> A professional-grade finish built for years of protection, not months</li>
       </ul>
     </div>
 
     <!-- HCC -->
     <div style="background:var(--card);border:1px solid var(--border);border-top:3px solid var(--gold);border-radius:10px;padding:24px;">
       <div id="tier4-name" style="font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);margin-bottom:4px;">HCC</div>
-      <div id="tier4-life" style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Up to 10 Years</div>
+      <div id="tier4-life" style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Our Longest-Lasting Protection</div>
       <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px;">
-        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--gold);flex-shrink:0;">✓</span> Highest-grade coating product available</li>
-        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--gold);flex-shrink:0;">✓</span> Maximum hardness &amp; longevity</li>
-        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--gold);flex-shrink:0;">✓</span> Ultimate gloss &amp; hydrophobic performance</li>
-        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--gold);flex-shrink:0;">✓</span> Strongest chemical &amp; UV resistance</li>
-        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--gold);flex-shrink:0;">✓</span> 10-year warranty</li>
+        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--gold);flex-shrink:0;">✓</span> Our most advanced protection — denser, longer-lasting than Pro or Pro Lite</li>
+        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--gold);flex-shrink:0;">✓</span> Stays cleaner between washes and holds its gloss the longest of any tier we offer</li>
+        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--gold);flex-shrink:0;">✓</span> Stands up to harsh chemicals &amp; road salt better than Pro or Pro Lite</li>
+        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--gold);flex-shrink:0;">✓</span> Won't crack, flake, or break down over time — built for the long haul</li>
       </ul>
     </div>
 
+  </div>
+
+  <div class="section-label">Pricing by Vehicle Size</div>
+  <div class="table-wrap">
+    <table class="ceramic-table">
+      <thead>
+        <tr>
+          <th>Vehicle Size</th><th>Examples</th>
+          <th>Pro Lite</th><th>Pro</th><th>HCC</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Coupe / Small Car</td><td>Mustang, Civic, Corolla</td><td><span class="price">Starting at $750</span></td><td><span class="price">Starting at $1,000</span></td><td><span class="price">Starting at $1,250</span></td></tr>
+        <tr><td>Sedan / Small SUV / Crossover</td><td>Camry, RAV4, CR-V, Equinox</td><td><span class="price">Starting at $850</span></td><td><span class="price">Starting at $1,150</span></td><td><span class="price">Starting at $1,400</span></td></tr>
+        <tr><td>Mid-Size SUV (3rd Row) / Crew Cab Truck</td><td>Pilot, Explorer, F-150, Ram 1500</td><td><span class="price">Starting at $950</span></td><td><span class="price">Starting at $1,300</span></td><td><span class="price">Starting at $1,600</span></td></tr>
+        <tr><td>Large SUV</td><td>Tahoe, Suburban, Expedition</td><td><span class="price">Starting at $1,100</span></td><td><span class="price">Starting at $1,500</span></td><td><span class="price">Starting at $1,800</span></td></tr>
+        <tr><td>Lifted / XL / Dually</td><td>Lifted trucks, 2500s, Capped Trucks</td><td><span class="price">Starting at $1,300</span></td><td><span class="price">Starting at $1,700</span></td><td><span class="price">Starting at $2,000</span></td></tr>
+      </tbody>
+    </table>
   </div>
 
   <div style="text-align:center;margin-bottom:28px;">
@@ -733,9 +732,71 @@
 
   <div class="notes">
     <div class="notes-title">Good to Know</div>
-    <p class="note">Pricing is the same across all tiers and is confirmed after a free vehicle inspection — before any work begins. No surprises.</p>
+    <p class="note">All prices are starting prices — final price confirmed after a free vehicle inspection before any work begins. No surprises.</p>
     <p class="note">An additional cost of $100–$200 may apply for heavily swirled, oxidized, or neglected paint — we'll always let you know ahead of time.</p>
-    <p class="note">Lifespan estimates assume proper maintenance: hand washing, avoiding automatic car washes, and annual inspections.</p>
+    <p class="note">All packages include decontamination wash, clay bar, one-stage polish, and full coating application.</p>
+  </div>
+</div>
+</div>
+
+<hr class="divider">
+
+<!-- WINDOW TINTING -->
+<div id="tint">
+<div class="section">
+  <div class="section-eyebrow">Uviron PureMax &amp; KoolMax Film</div>
+  <div class="section-title">Window Tinting<br>Pricing Guide</div>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:32px;">Two premium film options, both backed by a lifetime warranty against fading, peeling, cracking, and bubbling.</p>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-bottom:36px;">
+
+    <!-- PureMax Carbon -->
+    <div style="background:var(--card);border:1px solid var(--border);border-top:3px solid var(--tier1);border-radius:10px;padding:24px;">
+      <div style="font-family:'Playfair Display',serif;font-size:22px;color:var(--tier1);margin-bottom:4px;">PureMax</div>
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Nano-Carbon Film</div>
+      <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px;">
+        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier1);flex-shrink:0;">✓</span> Blocks 99% of UV rays — protects your skin, interior, and resale value</li>
+        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier1);flex-shrink:0;">✓</span> Zero radio, GPS, or cell signal interference</li>
+        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier1);flex-shrink:0;">✓</span> Sharp, clear visibility with a deep, factory-black look that won't fade</li>
+        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--tier1);flex-shrink:0;">✓</span> Excellent everyday heat and glare rejection at a great value</li>
+      </ul>
+    </div>
+
+    <!-- KoolMax Ceramic -->
+    <div style="background:var(--card);border:1px solid var(--border);border-top:3px solid var(--gold);border-radius:10px;padding:24px;">
+      <div style="font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);margin-bottom:4px;">KoolMax</div>
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Nano-Ceramic Film</div>
+      <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px;">
+        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--gold);flex-shrink:0;">✓</span> Our highest heat rejection film — blocks significantly more solar heat than PureMax</li>
+        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--gold);flex-shrink:0;">✓</span> Ultra-clear optical clarity — no haze or fogging, ever</li>
+        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--gold);flex-shrink:0;">✓</span> Same 99% UV protection and zero signal interference as PureMax</li>
+        <li style="font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--gold);flex-shrink:0;">✓</span> The step-up choice for hot summers and long days in the vehicle</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="section-label">Window Tint Pricing</div>
+  <div class="table-wrap">
+    <table class="main-table">
+      <thead>
+        <tr>
+          <th style="text-align:left">Service</th><th>PureMax (Carbon)</th><th>KoolMax (Ceramic)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Front 2 Windows</td><td><span class="price">$100</span></td><td><span class="price">$150</span></td></tr>
+        <tr><td>Front 2 Windows + Brow</td><td><span class="price">$130</span></td><td><span class="price">$195</span></td></tr>
+        <tr><td>SxS / UTV — 2-Door, All Windows</td><td><span class="price">$350</span></td><td><span class="price">$525</span></td></tr>
+        <tr><td>SxS / UTV — 4-Door / Crew, All Windows</td><td><span class="price">$425</span></td><td><span class="price">$640</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="notes">
+    <div class="notes-title">Good to Know</div>
+    <p class="note">Pennsylvania law requires a minimum 70% VLT on the windshield (strip only above the AS-1 line) and front side windows. There's no minimum on rear side or back glass.</p>
+    <p class="note">A brow (windshield strip) can be added on its own for +$30.</p>
   </div>
 </div>
 </div>
@@ -816,9 +877,9 @@
   <div class="contact-grid">
     <div class="contact-info">
       <p>Ready to give your vehicle the treatment it deserves? Reach out and we'll get you scheduled. Serving Brookville, PA and surrounding areas.</p>
-      <div class="contact-detail"><span class="label">Phone</span><span id="contact-phone-display">Your phone number here</span></div>
-      <div class="contact-detail"><span class="label">Email</span><span id="contact-email-display">Your email here</span></div>
-      <div class="contact-detail"><span class="label">Location</span><span>Brookville, PA</span></div>
+      <div class="contact-detail"><span class="label">Phone</span><span id="contact-phone-display">724-689-5482</span></div>
+      <div class="contact-detail"><span class="label">Email</span><span id="contact-email-display">Contact via phone or the form below</span></div>
+      <div class="contact-detail"><span class="label">Location</span><span>Brookville, PA 15825</span></div>
       <div class="contact-detail"><span class="label">Hours</span><span>By appointment</span></div>
     </div>
     <form class="contact-form" id="booking-form" onsubmit="handleBookingSubmit(event)">
@@ -839,12 +900,17 @@
         <select name="service" required>
           <option value="">Select a service...</option>
           <option>Full Detail</option>
-          <option>Exterior Only</option>
-          <option>Interior Only</option>
-          <option>Ceramic Coating – Coating (2 yr)</option>
-          <option>Ceramic Coating – Pro (5 yr)</option>
-          <option>Ceramic Coating – Pro+ (7 yr)</option>
-          <option>Ceramic Coating – HCC (10 yr)</option>
+          <option>Ceramic Coating – Pro Lite</option>
+          <option>Ceramic Coating – Pro</option>
+          <option>Ceramic Coating – HCC</option>
+          <option>Window Tint – Front 2 (PureMax)</option>
+          <option>Window Tint – Front 2 (KoolMax)</option>
+          <option>Window Tint – Front 2 + Brow (PureMax)</option>
+          <option>Window Tint – Front 2 + Brow (KoolMax)</option>
+          <option>Window Tint – SxS/UTV 2-Door (PureMax)</option>
+          <option>Window Tint – SxS/UTV 2-Door (KoolMax)</option>
+          <option>Window Tint – SxS/UTV 4-Door (PureMax)</option>
+          <option>Window Tint – SxS/UTV 4-Door (KoolMax)</option>
           <option>Add-On Services</option>
           <option>Not sure – want a quote</option>
         </select>
@@ -1044,8 +1110,6 @@
       if (t.tier1Life) document.getElementById('tier1-life').textContent = t.tier1Life;
       if (t.tier2Name) document.getElementById('tier2-name').textContent = t.tier2Name;
       if (t.tier2Life) document.getElementById('tier2-life').textContent = t.tier2Life;
-      if (t.tier3Name) document.getElementById('tier3-name').textContent = t.tier3Name;
-      if (t.tier3Life) document.getElementById('tier3-life').textContent = t.tier3Life;
       if (t.tier4Name) document.getElementById('tier4-name').textContent = t.tier4Name;
       if (t.tier4Life) document.getElementById('tier4-life').textContent = t.tier4Life;
     }
