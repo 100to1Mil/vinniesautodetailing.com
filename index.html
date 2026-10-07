@@ -457,7 +457,16 @@
   }
   .nav-links a:hover { border-color: var(--red); color: var(--red); }
   .nav-links a.active { background: var(--red); color: #fff; box-shadow: 0 2px 8px rgba(204,31,43,0.3); }
-  @media (max-width: 1000px) { .nav-links { display: none; } }
+  @media (max-width: 1000px) {
+    nav { padding: 0 12px; }
+    .nav-inner { flex-direction: column; align-items: stretch; height: auto; padding: 8px 0 0; }
+    .nav-logo { align-self: center; }
+    .nav-logo img { height: 56px; }
+    .nav-links { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 6px; padding: 8px 2px 10px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .nav-links::-webkit-scrollbar { display: none; }
+    .nav-links li { flex: 0 0 auto; }
+    .nav-links a { white-space: nowrap; }
+  }
 
   .tile-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 8px; }
   @media (max-width: 800px) { .tile-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -564,57 +573,12 @@
   </div>
 </div>
 
-<div class="section" style="padding-bottom:24px;">
-  <div class="section-eyebrow">&#9733; Customer Feedback</div>
-  <div class="section-title">Why People Choose Vinnie's</div>
-  <div class="reviews-teaser-grid">
-    <div class="review-card">
-      <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-      <p class="review-text">"I have never been more impressed by a professional detailing. 10/10 inside and outside of my vehicle. I just booked an appointment to have my husband's truck detailed too."</p>
-      <div class="review-author">Cortnee Reynolds</div>
-      <div class="review-date">Google Review</div>
-    </div>
-    <div class="review-card">
-      <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-      <p class="review-text">"I wanted to take a moment to express my sincere appreciation for the exceptional job Vinnie did detailing my cars and applying ceramic coating. Your expertise and dedication have certainly earned my trust and loyalty."</p>
-      <div class="review-author">Kristen Strawcutter</div>
-      <div class="review-date">Google Review</div>
-    </div>
-    <div class="review-card">
-      <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-      <p class="review-text">"Vinnie did an amazing job on my truck. The truck looked better than new when he was all done. Highly recommended!!"</p>
-      <div class="review-author">Nathan Croyle</div>
-      <div class="review-date">Google Review</div>
-    </div>
-  </div>
-
-  <div class="fb-embed-wrap">
-    <div id="fb-root"></div>
-    <div class="fb-page"
-      data-href="https://www.facebook.com/VinniesAutoDetailingPA/"
-      data-tabs="reviews"
-      data-width="500"
-      data-height="360"
-      data-small-header="true"
-      data-adapt-container-width="true"
-      data-hide-cover="false"
-      data-show-facepile="false">
-      <blockquote cite="https://www.facebook.com/VinniesAutoDetailingPA/" class="fb-xfbml-parse-ignore">
-        <a href="https://www.facebook.com/VinniesAutoDetailingPA/">Vinnie's Auto Detailing and Ceramic Coating</a>
-      </blockquote>
-    </div>
-  </div>
-</div>
-
 <div class="cta-band">
   <div class="cta-band-title">Ready to see pricing?</div>
   <p class="cta-band-sub">Explore the full service menu and get a free in-person estimate</p>
   <a href="full-detail.html" class="btn-primary">View Services &amp; Pricing</a>
 </div>
 
-<script async defer crossorigin="anonymous"
-  src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v19.0">
-</script>
 
 
 <hr class="divider">
@@ -682,6 +646,35 @@
 </div>
 
 <hr class="divider">
+
+<div id="facebook">
+<div class="section" style="padding-bottom:40px;">
+  <div class="section-eyebrow">Follow Along</div>
+  <div class="section-title">Find Us on Facebook</div>
+  <div class="fb-embed-wrap">
+    <div id="fb-root"></div>
+    <div class="fb-page"
+      data-href="https://www.facebook.com/VinniesAutoDetailingPA/"
+      data-tabs="timeline"
+      data-width="500"
+      data-height="520"
+      data-small-header="true"
+      data-adapt-container-width="true"
+      data-hide-cover="false"
+      data-show-facepile="false">
+      <blockquote cite="https://www.facebook.com/VinniesAutoDetailingPA/" class="fb-xfbml-parse-ignore">
+        <a href="https://www.facebook.com/VinniesAutoDetailingPA/">Vinnie's Auto Detailing and Ceramic Coating</a>
+      </blockquote>
+    </div>
+  </div>
+</div>
+</div>
+
+<hr class="divider">
+
+<script async defer crossorigin="anonymous"
+  src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v19.0">
+</script>
 
 <div id="contact">
 <div class="section">
@@ -928,6 +921,13 @@
     }
 
   }).catch(err => console.log('Firebase sync skipped:', err));
+</script>
+<script>
+  (function () {
+    var ul = document.querySelector('.nav-links');
+    var a = ul && ul.querySelector('a.active');
+    if (ul && a) ul.scrollLeft = a.offsetLeft - (ul.clientWidth - a.clientWidth) / 2;
+  })();
 </script>
 </body>
 </html>
