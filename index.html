@@ -474,12 +474,6 @@
   .tile:hover { border-color: var(--red); transform: translateY(-2px); }
   .tile-img { height: 110px; background: var(--bg2); background-size: cover; background-position: center; }
   .tile-label { padding: 12px 14px; font-size: 13px; font-weight: 700; color: var(--text); text-align: center; }
-  .meet-vinnie { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-  .meet-vinnie-inner { max-width: 1180px; margin: 0 auto; padding: 36px 24px; display: flex; align-items: center; gap: 24px; }
-  @media (max-width: 640px) { .meet-vinnie-inner { flex-direction: column; text-align: center; } }
-  .meet-vinnie-photo { width: 88px; height: 88px; border-radius: 50%; background: #ddd8c8; border: 3px solid var(--gold); flex-shrink: 0; }
-  .meet-vinnie-name { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.04em; color: var(--text); margin-bottom: 4px; }
-  .meet-vinnie-text { font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 640px; }
   .reviews-teaser-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
   @media (max-width: 800px) { .reviews-teaser-grid { grid-template-columns: 1fr; } }
   .fb-embed-wrap { display: flex; justify-content: center; margin-top: 8px; }
@@ -487,6 +481,7 @@
   .cta-band-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--text); margin-bottom: 8px; }
   .cta-band-sub { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
   .mini-cta { text-align: center; padding: 36px 24px; background: #fbf1de; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
 </style>
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-4ZRVG6KTLK"></script>
@@ -544,33 +539,23 @@
 <div class="section" style="padding-top:44px;padding-bottom:32px;">
   <div class="tile-grid">
     <a href="ceramic-coating.html" class="tile">
-      <div class="tile-img"></div>
+      <div class="tile-img" style="background-image:url('images/tile-ceramic.jpg');"></div>
       <div class="tile-label">Ceramic Coating</div>
     </a>
     <a href="window-tint.html" class="tile">
-      <div class="tile-img"></div>
+      <div class="tile-img" style="background-image:url('images/tile-tint.jpg');"></div>
       <div class="tile-label">Window Tint</div>
     </a>
     <a href="paint-correction.html" class="tile">
-      <div class="tile-img"></div>
+      <div class="tile-img" style="background-image:url('images/tile-polish.jpg');"></div>
       <div class="tile-label">Paint Correction</div>
     </a>
     <a href="full-detail.html" class="tile">
-      <div class="tile-img"></div>
+      <div class="tile-img" style="background-image:url('images/tile-detail.jpg');background-position:center 60%;"></div>
       <div class="tile-label">Full Detail</div>
     </a>
   </div>
 </div>
-</div>
-
-<div class="meet-vinnie">
-  <div class="meet-vinnie-inner">
-    <div class="meet-vinnie-photo"></div>
-    <div>
-      <div class="meet-vinnie-name">Meet Vinnie</div>
-      <p class="meet-vinnie-text">Owner and lead detailer &mdash; every job is done personally, start to finish. Fully insured, Brookville's top ceramic coating installer, and known for getting it as close to perfect as possible.</p>
-    </div>
-  </div>
 </div>
 
 <div class="cta-band">
@@ -588,12 +573,15 @@
   <div class="section-eyebrow">Our Work</div>
   <div class="section-title">Photo Gallery</div>
   <div class="gallery-grid" id="gallery-grid">
-    <div class="gallery-item"><span>Photo coming soon</span></div>
-    <div class="gallery-item"><span>Photo coming soon</span></div>
-    <div class="gallery-item"><span>Photo coming soon</span></div>
-    <div class="gallery-item"><span>Photo coming soon</span></div>
-    <div class="gallery-item"><span>Photo coming soon</span></div>
-    <div class="gallery-item"><span>Photo coming soon</span></div>
+    <div class="gallery-item"><img src="images/gallery-wrx.jpg" alt="Blue Subaru sedan detailed at Vinnie's Auto Detailing" loading="lazy"></div>
+    <div class="gallery-item"><img src="images/gallery-camaro.jpg" alt="White Chevrolet Camaro SS detailed at Vinnie's Auto Detailing" loading="lazy"></div>
+    <div class="gallery-item"><img src="images/gallery-jeep.jpg" alt="Blue Jeep Wrangler Rubicon detailed at Vinnie's Auto Detailing" loading="lazy"></div>
+    <div class="gallery-item"><img src="images/gallery-colorado.jpg" alt="Red Chevrolet Colorado detailed at Vinnie's Auto Detailing" loading="lazy"></div>
+    <div class="gallery-item"><img src="images/gallery-highlander.jpg" alt="White Toyota SUV detailed at Vinnie's Auto Detailing" loading="lazy"></div>
+    <div class="gallery-item"><img src="images/gallery-tiguan.jpg" alt="Navy Volkswagen SUV detailed at Vinnie's Auto Detailing" loading="lazy"></div>
+    <div class="gallery-item"><img src="images/gallery-hrv.jpg" alt="Black Honda crossover detailed at Vinnie's Auto Detailing" loading="lazy"></div>
+    <div class="gallery-item"><img src="images/gallery-ridgeline.jpg" alt="Gray Honda pickup detailed at Vinnie's Auto Detailing" loading="lazy"></div>
+    <div class="gallery-item"><img src="images/gallery-kawasaki.jpg" alt="Kawasaki Ridge Crew side-by-side in the shop at Vinnie's Auto Detailing" loading="lazy"></div>
   </div>
 </div>
 </div>
